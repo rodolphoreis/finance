@@ -1,0 +1,39 @@
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+nav img {
+  width: 500px;
+}
+
+nav button {
+  margin-top: 30px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #f83939;
+  font-weight: 600;
+  background-color: white;
+  border: 3px solid red;
+}
+
+nav button:hover {
+  background-color: #f83939;
+  color: white;
+  padding: 7px 17px;
+  border-color: #f83939;
+  cursor: pointer;
+}
+
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+}
+
+.trash-icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  vertical-align: middle;
+}
