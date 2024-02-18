@@ -24,6 +24,7 @@ const Intro = () => {
             autoComplete="given-name"
             className="custom-input"
           />
+          <input type="hidden" name="_action" value="newUser" />
           <button type="submit" className="Intro-btn-dark">
             <span>Criar uma Conta</span>
             <UserPlusIcon />

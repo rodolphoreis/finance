@@ -1,0 +1,6 @@
+.dashboard h1 {
+  display: flex;
+}
+.dashboard span {
+  margin-left: 12px;
+}
