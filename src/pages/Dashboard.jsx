@@ -5,7 +5,7 @@ import "./dashboard.css";
 import { useLoaderData } from "react-router-dom";
 
 //helpers function
-import { createBudget } from "../helpers";
+import { createBudget, waait } from "../helpers";
 import { fetchData } from "../helpers";
 
 // library imports
@@ -24,7 +24,8 @@ export function dashboardLoader() {
 
 //action
 export async function dashboardAction({ request }) {
-  console.log("dashboardAction foi chamada!");
+  await waait();
+
   const data = await request.formData();
   const { _action, ...values } = Object.fromEntries(data);
 
@@ -43,8 +44,6 @@ export async function dashboardAction({ request }) {
   }
   if (_action === "createbudget") {
     try {
-      console.log("Valor de name:", values.newBudget);
-      console.log("Valor de amount:", values.newBudgetAmount);
       createBudget({
         name: values.newBudget,
         amount: values.newBudgetAmount,
