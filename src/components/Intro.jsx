@@ -15,7 +15,7 @@ const Intro = () => {
           O orçamento pessoal é o segredo da liberdade financeira. Comece sua
           jornada hoje.
         </p>
-        <Form method="post" class="container">
+        <Form method="post" className="container">
           <input
             type="text"
             name="userName"
