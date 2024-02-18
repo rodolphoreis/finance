@@ -1,0 +1,57 @@
+.error-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 59vh;
+  text-align: center;
+}
+
+.error-message {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.error-link {
+  display: flex;
+  flex-direction: column;
+}
+.error-btn {
+  display: flex;
+}
+
+.btn-goBack {
+  background-color: black;
+  width: 120px;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-right: 30px;
+  cursor: pointer;
+}
+.error-btn-dark {
+  background-color: #56703e;
+  width: 120px;
+  color: white;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 20px;
+  text-decoration: none;
+}
+.error-btn-dark svg {
+  width: 20px;
+  height: auto;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.btn-goBack svg {
+  width: 20px;
+  height: auto;
+  vertical-align: middle;
+  margin-right: 10px;
+}
