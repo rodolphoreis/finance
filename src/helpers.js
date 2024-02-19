@@ -16,8 +16,6 @@ export const fetchData = (key) => {
 
 // create budget
 export const createBudget = ({ name, amount }) => {
-  console.log("createBudget foi chamada!");
-  console.log("Criando novo orçamento:", name, amount);
   const newItem = {
     id: Date.now().toString(),
     name: name,
@@ -28,12 +26,27 @@ export const createBudget = ({ name, amount }) => {
   const existingBudgets = fetchData("budgets") ?? [];
   const updatedBudgets = [...existingBudgets, newItem];
 
-  console.log("Orçamentos existentes:", existingBudgets);
-  console.log("Novos orçamentos:", updatedBudgets);
-
   localStorage.setItem(
     "budgets",
     JSON.stringify([...existingBudgets, newItem])
+  );
+};
+
+// create expense
+export const createExpense = ({ name, amount, budgetId }) => {
+  const newItem = {
+    id: Date.now().toString(),
+    name: name,
+    createAt: Date.now(),
+    amount: -amount,
+    budgetId: budgetId,
+  };
+  const existingExpenses = fetchData("expenses") ?? [];
+  const updatedExpense = [...existingExpenses, newItem];
+
+  localStorage.setItem(
+    "expenses",
+    JSON.stringify([...existingExpense, newItem])
   );
 };
 

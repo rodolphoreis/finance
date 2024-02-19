@@ -5,7 +5,7 @@ import "./dashboard.css";
 import { useLoaderData } from "react-router-dom";
 
 //helpers function
-import { createBudget, waait } from "../helpers";
+import { createBudget, createExpense, waait } from "../helpers";
 import { fetchData } from "../helpers";
 
 // library imports
@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 // components
 import Intro from "../components/Intro";
 import AddBudgetForm from "../components/AddBudgetForm";
+import AddExpenseForm from "../components/AddExpenseForm";
 
 //Loader
 export function dashboardLoader() {
@@ -47,11 +48,26 @@ export async function dashboardAction({ request }) {
       createBudget({
         name: values.newBudget,
         amount: values.newBudgetAmount,
+        budgetId: values.newExpenseBudget,
       });
 
       return toast.success("Orçamento criado!");
     } catch (e) {
       throw new Error("Ocorreu um problema ao criar seu orçamento.");
+    }
+  }
+  if (_action === "createExpense") {
+    try {
+      createExpense({
+        name: values.newExpense,
+        amount: values.newExpenseAmount,
+      });
+
+      return toast.success(
+        `Despesa criada no valor de R$ ${values.newExpense}!`
+      );
+    } catch (e) {
+      throw new Error("Ocorreu um problema ao criar sua despesa.");
     }
   }
   return null;
@@ -68,12 +84,21 @@ const Dashboard = () => {
             Bem-Vindo, <span className="dashboard-name">{userName}</span>
           </h1>
           <div className="grid-sm">
-            {/* budgets ? ():() */}
-            <div className="grid-lg">
-              <div className="flex-lg">
+            {budgets && budgets.length > 0 ? (
+              <div className="grid-lg">
+                <div className="flex-lg">
+                  <AddBudgetForm />
+                  <h1>olaaa</h1>
+                  <AddExpenseForm budgets={budgets} />
+                </div>
+              </div>
+            ) : (
+              <div className="grid-sm">
+                <p>O orçamento pessoal é o segredo da liberdade financeira.</p>
+                <p>Crie um orçamento para começar!</p>
                 <AddBudgetForm />
               </div>
-            </div>
+            )}
           </div>
         </div>
       ) : (
