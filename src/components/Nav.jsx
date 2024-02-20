@@ -1,38 +1,36 @@
-// react router dom imports
+// rrd imports
 import { Form, NavLink } from "react-router-dom";
 
-// Nav css
-import "./nav.css";
-
-// Library
+// library
 import { TrashIcon } from "@heroicons/react/24/solid";
 
 // assets
-import logo from "../assets/logo.png";
+import logomark from "../assets/logomark.svg";
 
 const Nav = ({ userName }) => {
   return (
     <nav>
-      <NavLink to="/">
-        <img src={logo} alt="Logomark" />
+      <NavLink to="/" aria-label="Go to home">
+        <img src={logomark} alt="" height={30} />
+        <span>O Mundo Fora da Gaiola</span>
       </NavLink>
       {userName && (
         <Form
           method="post"
-          action="/logout"
-          onSubmit={(e) => {
-            if (!confirm("Excluir usuário e todos os dados?"))
-              e.preventDefault();
+          action="logout"
+          onSubmit={(event) => {
+            if (!confirm("Excluir usuário e todos os dados?")) {
+              event.preventDefault();
+            }
           }}
         >
-          <button type="submit" className="btn-delete">
+          <button type="submit" className="btn btn--warning">
             <span>Deletar usuário</span>
-            <TrashIcon className="trash-icon" />
+            <TrashIcon width={20} />
           </button>
         </Form>
       )}
     </nav>
   );
 };
-
 export default Nav;

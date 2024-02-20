@@ -1,11 +1,8 @@
 // react imports
 import { useEffect, useRef } from "react";
 
-// react roputer dom imports
+// rrd imports
 import { useFetcher } from "react-router-dom";
-
-// css
-import "./addExpenseForm.css";
 
 // library imports
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
@@ -13,6 +10,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 const AddExpenseForm = ({ budgets }) => {
   const fetcher = useFetcher();
   const isSubmitting = fetcher.state === "submitting";
+
   const formRef = useRef();
   const focusRef = useRef();
 
@@ -23,16 +21,15 @@ const AddExpenseForm = ({ budgets }) => {
       // reset focus
       focusRef.current.focus();
     }
-  });
+  }, [isSubmitting]);
 
   return (
-    <div className="container-expense">
+    <div className="form-wrapper">
       <h2 className="h3">
-        {" "}
         Adicionar Nova{" "}
         <span className="accent">
           {budgets.length === 1 && `${budgets.map((budg) => budg.name)}`}
-        </span>
+        </span>{" "}
         Despesa
       </h2>
       <fetcher.Form method="post" className="grid-sm" ref={formRef}>
@@ -56,7 +53,7 @@ const AddExpenseForm = ({ budgets }) => {
               inputMode="decimal"
               name="newExpenseAmount"
               id="newExpenseAmount"
-              placeholder="1500"
+              placeholder="350,40"
               required
             />
           </div>
@@ -76,13 +73,13 @@ const AddExpenseForm = ({ budgets }) => {
           </select>
         </div>
         <input type="hidden" name="_action" value="createExpense" />
-        <button type="submit" className="addBudget-btn" disabled={isSubmitting}>
+        <button type="submit" className="btn btn--dark" disabled={isSubmitting}>
           {isSubmitting ? (
-            <span> Enviando</span>
+            <span>Enviando…</span>
           ) : (
             <>
-              <span>Criar Despesa</span>
-              <PlusCircleIcon />
+              <span>Adicionar Despesa</span>
+              <PlusCircleIcon width={20} />
             </>
           )}
         </button>
@@ -90,5 +87,4 @@ const AddExpenseForm = ({ budgets }) => {
     </div>
   );
 };
-
 export default AddExpenseForm;

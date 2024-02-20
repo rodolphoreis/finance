@@ -1,16 +1,11 @@
 // reacts
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-// react router dom imports
-import { useFetcher } from "react-router-dom";
-
-import { createBudget } from "../helpers";
-
-//css
-import "./addbudgetForm.css";
+// rrd imports
+import { Form, useFetcher } from "react-router-dom";
 
 // library imports
-import { CurrencyEuroIcon } from "@heroicons/react/24/solid";
+import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
 
 const AddBudgetForm = () => {
   const fetcher = useFetcher();
@@ -26,44 +21,17 @@ const AddBudgetForm = () => {
     }
   }, [isSubmitting]);
 
-  const [newBudget, setNewBudget] = useState("");
-  const [newBudgetAmount, setNewBudgetAmount] = useState("");
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      console.log("handleSubmit function called");
-      console.log("New Budget:", newBudget);
-      console.log("New Budget Amount:", newBudgetAmount);
-
-      await createBudget({ name: newBudget, amount: newBudgetAmount });
-
-      setNewBudget("");
-      setNewBudgetAmount("");
-    } catch (error) {
-      console.error("Erro ao criar o orçamento:", error);
-    }
-  };
-
   return (
-    <div className="AddBudget-form">
+    <div className="form-wrapper">
       <h2 className="h3">Criar Orçamento</h2>
-      <fetcher.Form
-        method="post"
-        className="add-form"
-        onSubmit={handleSubmit}
-        ref={formRef}
-      >
+      <fetcher.Form method="post" className="grid-sm" ref={formRef}>
         <div className="grid-xs">
-          <label htmlFor="newBudget"> Orçamento</label>
+          <label htmlFor="newBudget">Orçamento</label>
           <input
             type="text"
             name="newBudget"
             id="newBudget"
-            value={newBudget}
-            placeholder=" Salário"
-            onChange={(e) => setNewBudget(e.target.value)}
+            placeholder="Salário"
             required
             ref={focusRef}
           />
@@ -75,21 +43,19 @@ const AddBudgetForm = () => {
             step="0.01"
             name="newBudgetAmount"
             id="newBudgetAmount"
-            value={newBudgetAmount}
-            placeholder="R$ 350"
-            onChange={(e) => setNewBudgetAmount(e.target.value)}
+            placeholder="5300.80"
             required
             inputMode="decimal"
           />
         </div>
         <input type="hidden" name="_action" value="createBudget" />
-        <button type="submit" className="addBudget-btn" disabled={isSubmitting}>
+        <button type="submit" className="btn btn--dark" disabled={isSubmitting}>
           {isSubmitting ? (
-            <span> Enviando</span>
+            <span>Enviando…</span>
           ) : (
             <>
-              <span>Criar Orçamento</span>
-              <CurrencyEuroIcon />
+              <span>Criar orçamento</span>
+              <CurrencyDollarIcon width={20} />
             </>
           )}
         </button>
@@ -97,5 +63,4 @@ const AddBudgetForm = () => {
     </div>
   );
 };
-
 export default AddBudgetForm;

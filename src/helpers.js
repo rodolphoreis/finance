@@ -1,7 +1,5 @@
-import { v4 as uuidv4 } from "uuid";
-
 export const waait = () =>
-  new Promise((res) => setTimeout(res, Math.random() * 2000));
+  new Promise((res) => setTimeout(res, Math.random() * 800));
 
 // colors
 const generateRandomColor = () => {
@@ -9,24 +7,38 @@ const generateRandomColor = () => {
   return `${existingBudgetLength * 34} 65% 50%`;
 };
 
-//Local storage
+// Local storage
 export const fetchData = (key) => {
-  return localStorage.getItem(key);
+  return JSON.parse(localStorage.getItem(key));
+};
+
+// Get all items from local storage
+export const getAllMatchingItems = ({ category, key, value }) => {
+  const data = fetchData(category) ?? [];
+  return data.filter((item) => item[key] === value);
+};
+
+// delete item from local storage
+export const deleteItem = ({ key, id }) => {
+  const existingData = fetchData(key);
+  if (id) {
+    const newData = existingData.filter((item) => item.id !== id);
+    return localStorage.setItem(key, JSON.stringify(newData));
+  }
+  return localStorage.removeItem(key);
 };
 
 // create budget
 export const createBudget = ({ name, amount }) => {
   const newItem = {
-    id: Date.now().toString(),
+    id: crypto.randomUUID(),
     name: name,
-    createAt: Date.now(),
+    createdAt: Date.now(),
     amount: +amount,
     color: generateRandomColor(),
   };
   const existingBudgets = fetchData("budgets") ?? [];
-  const updatedBudgets = [...existingBudgets, newItem];
-
-  localStorage.setItem(
+  return localStorage.setItem(
     "budgets",
     JSON.stringify([...existingBudgets, newItem])
   );
@@ -35,28 +47,48 @@ export const createBudget = ({ name, amount }) => {
 // create expense
 export const createExpense = ({ name, amount, budgetId }) => {
   const newItem = {
-    id: Date.now().toString(),
+    id: crypto.randomUUID(),
     name: name,
-    createAt: Date.now(),
-    amount: -amount,
+    createdAt: Date.now(),
+    amount: +amount,
     budgetId: budgetId,
   };
   const existingExpenses = fetchData("expenses") ?? [];
-  const updatedExpense = [...existingExpenses, newItem];
-
-  localStorage.setItem(
+  return localStorage.setItem(
     "expenses",
-    JSON.stringify([...existingExpense, newItem])
+    JSON.stringify([...existingExpenses, newItem])
   );
 };
 
-// delete item
-export const deleteItem = ({ key }) => {
-  clearLocalStorage();
-  return localStorage.removeItem(key);
+// total spent by budget
+export const calculateSpentByBudget = (budgetId) => {
+  const expenses = fetchData("expenses") ?? [];
+  const budgetSpent = expenses.reduce((acc, expense) => {
+    // check if expense.id === budgetId I passed in
+    if (expense.budgetId !== budgetId) return acc;
+
+    // add the current amount to my total
+    return (acc += expense.amount);
+  }, 0);
+  return budgetSpent;
 };
 
-// clear localStorage
-const clearLocalStorage = () => {
-  localStorage.clear();
+// FORMATTING
+export const formatDateToLocaleString = (epoch) =>
+  new Date(epoch).toLocaleDateString();
+
+// Formating percentages
+export const formatPercentage = (amt) => {
+  return amt.toLocaleString(undefined, {
+    style: "percent",
+    minimumFractionDigits: 0,
+  });
+};
+
+// Format currency
+export const formatCurrency = (amt) => {
+  return amt.toLocaleString(undefined, {
+    style: "currency",
+    currency: "USD",
+  });
 };
