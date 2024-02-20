@@ -27,9 +27,9 @@ export function deleteBudget({ params }) {
       });
     });
 
-    toast.success("Budget deleted successfully!");
+    toast.success("Orçamento excluído com sucesso!");
   } catch (e) {
-    throw new Error("There was a problem deleting your budget.");
+    throw new Error("Ocorreu um problema ao excluir seu orçamento.");
   }
   return redirect("/");
 }
