@@ -1,4 +1,4 @@
-//react router dom imports
+// rrd imports
 import { redirect } from "react-router-dom";
 
 // library
@@ -12,7 +12,13 @@ export async function logoutAction() {
   deleteItem({
     key: "userName",
   });
-  toast.success("Você excluiu sua conta!");
+  deleteItem({
+    key: "budgets",
+  });
+  deleteItem({
+    key: "expenses",
+  });
+  toast.success("You’ve deleted your account!");
   // return redirect
   return redirect("/");
 }
