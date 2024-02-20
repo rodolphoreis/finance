@@ -18,7 +18,7 @@ export async function logoutAction() {
   deleteItem({
     key: "expenses",
   });
-  toast.success("You’ve deleted your account!");
+  toast.success("Você excluiu sua conta!");
   // return redirect
   return redirect("/");
 }
