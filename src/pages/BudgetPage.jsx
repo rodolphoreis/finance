@@ -27,7 +27,7 @@ export async function budgetLoader({ params }) {
   });
 
   if (!budget) {
-    throw new Error("The budget you’re trying to find doesn’t exist");
+    throw new Error("O orçamento que você está tentando encontrar não existe");
   }
 
   return { budget, expenses };
